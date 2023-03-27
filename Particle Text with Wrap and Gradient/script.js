@@ -1,7 +1,44 @@
-const canvas = document.getElementById('canvas1');
-const ctx = canvas.getContext('2d');
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
+window.addEventListener('load', function(){
+    const canvas = document.getElementById('canvasThankYou');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    console.log(ctx);
+    
+    //const text = 'Thank You!!! Your message has been sent!';
+    //const textX = canvas.width/2;
+    //const textY = canvas.height/2;
+    ctx.lineWidth = 2;
+
+    ctx.fillStyle = 'green';
+    ctx.strokeStyle = 'gold';
+    ctx.font = '5em Courier';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    //ctx.fillText(text, textX, textY);
+    //ctx.strokeText(text, textX, textY);
+
+    const maxTextWidth = canvas.width * 0.3;
+
+    // If FONT SIZE is changed, change in fillText too.
+   function wrapText(text){
+      let linesArray = [];
+      let lineCounter = 0;
+      let line = ' ';
+      let words = text.split(' ');
+      for (let i = 0; i < words.length; i++){
+         let testLine = line + words[i] + ' ';
+         console.log(ctx.measureText(testLine));
+         ctx.fillText(testLine, canvas.width/2, 300 + i * 100);
+      }
+   
+   }
+
+    wrapText('Thanks!!! Your message has been sent!')
+
+});
+
+/*
 let particleArray = [];
 adjustX = 20;
 adjustY = 0;
@@ -111,8 +148,7 @@ function connect() {
       }
    }
 }
-
-
+*/
 
 //-----------Notes------------------------------
 // Speed can be changed by adjust density
@@ -138,13 +174,32 @@ function connect() {
          
 // To REPOSITION TEXT:
 // adjustX and adjustY in init() and global variable declaration section
+// ctx.fillText('text', x, y, maxWidth);
+// ctx.strokeText('text', x, y, maxWidth);
+// Size adjusted via ctx.font = '50px Arial'
+// Text Wrap via: measureText("text");
 
 // To Change Opacity of Lines during mouse event, see tutorial at 54:46
 // https://www.youtube.com/watch?
 //   v=XGioNBHrFU4&list=TLPQMTYxMTIwMjJVYOzTrlexuA&index=3&ab_channel=Frankslaboratory
 
+// CANVAS SIZE:
+// Canvas element has two independent sizes that need to be 
+// synchronised, else distorted.
+// Setting with CSS only, effects just the element size,
+// which will stretch the drawing surface size and distort
+// Better to set using canvas.width to set both 
+// element size and drawing surface size to same value.
 
 
+// 
+// 
+// 
 
+// 
+// 
+// 
 
-
+// 
+// 
+// 
