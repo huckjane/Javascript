@@ -5,39 +5,147 @@ window.addEventListener('load', function(){
     canvas.height = window.innerHeight;
     console.log(ctx);
     
+   class Particle {
+      constructor(){
+
+      }
+      draw(){
+
+      }
+      update(){
+
+      }
+   }
+
+   class Effect {
+      constructor(context, canvasWidth, canvasHeight){
+         this.context = context;
+         this.canvasWidth = canvasWidth;
+         this.canvasHeight = canvasHeight;
+         this.textX = this.canvasWidth/2;
+         this.textY = this.canvasHeight/2;
+         this.fontSize = 100;
+         this.lineHeight = this.fontSize * 0.8;
+         this.maxTextWidth = this.canvasWidth * 0.3;
+
+      }
+      wrapText(text){
+         const gradient = this.context.createLinearGradient(0, 0, canvas.width, canvas.height);
+         gradient.addColorStop(0.4, 'green');
+         gradient.addColorStop(0.5, 'gold');
+         gradient.addColorStop(0.6, 'green');
+         this.context.fillStyle = gradient;
+         this.context.textAlign = 'center';
+         this.context.textBaseline = 'middle';
+         this.context.lineWidth = 1;
+         this.context.strokeStyle = 'gold';
+         this.context.font = this.fontSize + 'px Courier';
+
+         // break text to new line
+         let linesArray = [];
+         let lineCounter = 0;
+         let line = '';
+         let words = text.split(' ');
+         for (let i = 0; i < words.length; i++){
+            let testLine = line + words[i] + ' ';
+            if (this.context.measureText(testLine).width > this.maxTextWidth){
+               line = words[i] + ' ';
+               lineCounter++;
+            } else {
+               line = testLine;
+            }
+            linesArray[lineCounter] = line;
+         }  
+         let textHeight =  this.lineHeight * lineCounter;
+         this.textY = canvas.height/2 - textHeight/2;
+         linesArray.forEach((el, index) => {
+            this.context.fillText(el, this.textX, this.textY);
+            this.context.strokeText(el, this.textX, this.textY);
+         });
+         console.log(linesArray);
+      }
+      convertToParticales(){
+
+      }
+      render(){
+
+      }
+   }
+
+   const effect = new Effect(ctx, canvas.width, canvas.height);
+   effect.wrapText('Thanks!!! Your message has been sent!');
+   console.log(effect);
+
+   function animate(){
+
+   }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    /*
     //const text = 'Thank You!!! Your message has been sent!';
     //const textX = canvas.width/2;
     //const textY = canvas.height/2;
     ctx.lineWidth = 2;
 
-    ctx.fillStyle = 'green';
+    const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+    gradient.addColorStop(0.4, 'green');
+    gradient.addColorStop(0.5, 'gold');
+    gradient.addColorStop(0.6, 'green');
+    ctx.fillStyle = gradient;
     ctx.strokeStyle = 'gold';
-    ctx.font = '5em Courier';
+    ctx.font = '80px Courier';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
     //ctx.fillText(text, textX, textY);
     //ctx.strokeText(text, textX, textY);
 
     const maxTextWidth = canvas.width * 0.3;
+    const lineHeight = 80;
 
     // If FONT SIZE is changed, change in fillText too.
    function wrapText(text){
       let linesArray = [];
       let lineCounter = 0;
-      let line = ' ';
+      let line = '';
       let words = text.split(' ');
       for (let i = 0; i < words.length; i++){
          let testLine = line + words[i] + ' ';
-         console.log(ctx.measureText(testLine));
-         ctx.fillText(testLine, canvas.width/2, 300 + i * 100);
-      }
-   
+         if (ctx.measureText(testLine).width > maxTextWidth){
+            line = words[i] + ' ';
+            lineCounter++;
+         } else {
+            line = testLine;
+         }
+         linesArray[lineCounter] = line;
+      }  
+      let textHeight =  lineHeight * lineCounter;
+      let textY = canvas.height/2 - textHeight/2;
+      linesArray.forEach((el, index) => {
+         ctx.fillText(el, canvas.width/2, 300 + index * 100);
+      });
+      console.log(linesArray);
    }
 
-    wrapText('Thanks!!! Your message has been sent!')
-
+    wrapText('Thanks!!! Your message has been sent!');
+*/
 });
 
+
+/////////////////////////////////////////////////////////
 /*
 let particleArray = [];
 adjustX = 20;
@@ -200,6 +308,4 @@ function connect() {
 // 
 // 
 
-// 
-// 
 // 
